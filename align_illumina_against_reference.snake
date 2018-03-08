@@ -24,6 +24,7 @@ assert os.path.exists( "pieces_reverse" ), "directory pieces_forward and pieces_
 # maybe remove aSamFiles and aForwardFiles
 
 bFastqNotFq = True # declaring global
+bForwardReverseNot1Or2 = False
 
 aSamFiles = []
 aForwardFiles = []
@@ -39,6 +40,14 @@ for szFile in glob.glob( "pieces_forward/*" ):
         elif( "_1.fq" in szFile ):
                 szUniqueID = re.sub( r"_1.fq", "_", szFile )
                 bFastqNotFq = False
+        elif( "_forward.fastq" in szFile ):
+                szUniqueID = re.sub( r"_forward.fastq", "_", szFile )
+                bFastqNotFq = True
+                bForwardReverseNot1Or2 = True
+        elif( "_forward.fq" in szFile ):
+                szUniqueID = re.sub( r"_forward.fq", "_", szFile )
+                bFastqNotFq = False
+                bForwardReverseNot1Or2 = True
         else:
                 sys.exit( szFile + " name not in _1.fastq or _1.fq format" )
 
@@ -66,10 +75,16 @@ def szGetForwardLittleFastqFromUniqueID( wildcards ):
         szBefore = szUniqueID[0:nIndex]
         szAfter = szUniqueID[nIndex+1:]
 
-        if ( bFastqNotFq ):
-                szForwardFastq = "pieces_forward/" + szBefore + "_1.fastq" + szAfter
+        if ( bForwardReverseNot1Or2 ):
+                if ( bFastqNotFq ):
+                        szForwardFastq = "pieces_forward/" + szBefore + "_forward.fastq" + szAfter
+                else:
+                        szForwardFastq = "pieces_forward/" + szBefore + "_forward.fq" + szAfter
         else:
-                szForwardFastq = "pieces_forward/" + szBefore + "_1.fq" + szAfter
+                if ( bFastqNotFq ):
+                        szForwardFastq = "pieces_forward/" + szBefore + "_1.fastq" + szAfter
+                else:
+                        szForwardFastq = "pieces_forward/" + szBefore + "_1.fq" + szAfter
         return szForwardFastq
 
 
@@ -88,10 +103,16 @@ def szGetReverseLittleFastqFromUniqueID( wildcards ):
         szBefore = szUniqueID[0:nIndex]
         szAfter = szUniqueID[nIndex+1:]
 
-        if ( bFastqNotFq ):
-                szReverseFastq = "pieces_reverse/" + szBefore + "_2.fastq" + szAfter
+        if ( bForwardReverseNot1Or2 ):
+                if ( bFastqNotFq ):
+                        szReverseFastq = "pieces_reverse/" + szBefore + "_reverse.fastq" + szAfter
+                else:
+                        szReverseFastq = "pieces_reverse/" + szBefore + "_reverse.fq" + szAfter
         else:
-                szReverseFastq = "pieces_reverse/" + szBefore + "_2.fq" + szAfte
+                if ( bFastqNotFq ):
+                        szReverseFastq = "pieces_reverse/" + szBefore + "_2.fastq" + szAfter
+                else:
+                        szReverseFastq = "pieces_reverse/" + szBefore + "_2.fq" + szAfter
 
         return szReverseFastq
 
