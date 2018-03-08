@@ -1,3 +1,10 @@
+You must have 2 subdirectories:
+pieces_forward
+pieces_reverse
+
+These are created by the stage1 of the pilon pipeline in
+~dgordon/pipelines/pilon
+
 came from pilon polishing 
 can be used for IGV and for freebayes
 see /net/eichler/vol20/projects/whole_genome_assembly/nobackups/yoruban/fix_pilon/align_illumina_to_freebayes_fixed
