@@ -1,5 +1,5 @@
 {
-    "assembly": {
-         "quivered": "/net/eichler/vol25/projects/whole_genome_assembly/nobackups/bonobo/pilon_quiver_indel_no_unzip/bonobo_quiver_pilon_no_unzip.fa"
-    }
+    "align_reads_to_this_fasta": "/net/eichler/vol25/projects/whole_genome_assembly/nobackups/bonobo/pilon_quiver_indel_no_unzip/bonobo_quiver_pilon_no_unzip.fa",
+    "tmp_dir": "/var/tmp/dgordon/align_illumina_against_reference"
+    
 }
