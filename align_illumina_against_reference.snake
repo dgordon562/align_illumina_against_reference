@@ -33,7 +33,7 @@ for szFile in glob.glob( "pieces_forward/*" ):
         # SRR3189761_1.fastq003
         aForwardFiles.append( szFile )
         aSamFiles.append( szFile + ".sam" )
-        if( "forwards.fastq" in szFile ):
+        if( szFile.startswith( "forwards.fastq" ) ):
                 szUniqueID = re.sub( "forwards.fastq", "", szFile )
                 nReadNameType = 1
         elif ( "_1.fastq" in szFile ):
@@ -48,6 +48,10 @@ for szFile in glob.glob( "pieces_forward/*" ):
         elif( "_forward.fq" in szFile ):
                 szUniqueID = re.sub( r"_forward.fq", "_", szFile )
                 nReadNameType = 5
+        elif( "_forwards.fastq" in szFile ):
+                # e.g., S15_forwards.fastq002
+                szUniqueID = re.sub( r"_forwards.fastq", "_", szFile )
+                nReadNameType = 6
         else:
                 sys.exit( szFile + " name not in _1.fastq or _1.fq format" )
 
@@ -87,6 +91,8 @@ def szGetForwardLittleFastqFromUniqueID( wildcards ):
                 szForwardFastq = "pieces_forward/" + szBefore + "_forward.fastq" + szAfter
         elif( nReadNameType == 5 ):
                 szForwardFastq = "pieces_forward/" + szBefore + "_forward.fq" + szAfter
+        elif( nReadNameType == 6 ):
+                szForwardFastq = "pieces_forward/" + szBefore + "_forwards.fastq" + szAfter
         else:
                 sys.exit(  "nReadNameType = {:d} but must be 1 to 5".format( nReadNameType ) )
                 
@@ -119,6 +125,8 @@ def szGetReverseLittleFastqFromUniqueID( wildcards ):
                 szReverseFastq = "pieces_reverse/" + szBefore + "_reverse.fastq" + szAfter
         elif( nReadNameType == 5 ):
                 szReverseFastq = "pieces_reverse/" + szBefore + "_reverse.fq" + szAfter
+        elif( nReadNameType == 6 ):
+                szReverseFastq = "pieces_reverse/" + szBefore + "_reverses.fastq" + szAfter
         else:
                 sys.exit(  "nReadNameType = {:d} but must be 1 to 5".format( nReadNameType ) )
                 
