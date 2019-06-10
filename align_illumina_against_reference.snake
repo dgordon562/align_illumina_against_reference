@@ -33,7 +33,7 @@ for szFile in glob.glob( "pieces_forward/*" ):
         # SRR3189761_1.fastq003
         aForwardFiles.append( szFile )
         aSamFiles.append( szFile + ".sam" )
-        if( szFile.startswith( "forwards.fastq" ) ):
+        if( "/forwards.fastq" in szFile ):
                 szUniqueID = re.sub( "forwards.fastq", "", szFile )
                 nReadNameType = 1
         elif ( "_1.fastq" in szFile ):
